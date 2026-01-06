@@ -1,9 +1,8 @@
 # My Dotfiles and Installer
 
-To keep things in sync across any device I might be logged into, I came up with
-this method inspired by
+To keep things in sync across any device I might be logged into, inspired by
 [Brandon Ivergo](https://brandon.invergo.net/news/2012-05-26-using-gnu-stow-to-manage-your-dotfiles.html)
-to makange my dotfiles. This method ke
+I wanted a better way to manage my dotfiles, here it is.
 
 Clone this repo to something like `~/.dotfiles` then...
 
