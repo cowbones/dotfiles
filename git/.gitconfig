@@ -1,0 +1,10 @@
+[include]
+	path = ~/.gitconfig.local
+[init]
+	defaultBranch = main
+[color]
+	ui = auto
+[push]
+	default = matching
+[pull]
+	rebase = false

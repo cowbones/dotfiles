@@ -1,0 +1,5 @@
+# any backup files
+*.bak
+
+# don't sync lazy-lock
+nvim/.config/nvim/lazy-lock.json

@@ -1,0 +1,8 @@
+{
+  "Lua.diagnostics.globals": ["vim"],
+  "Lua.workspace.library": [
+    "$VIMRUNTIME/lua",
+    "${3rd}/luv/library"
+  ],
+  "Lua.runtime.version": "LuaJIT"
+}
