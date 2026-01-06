@@ -3,22 +3,37 @@
 To keep things in sync across any device I might be logged into, I came up with
 this method inspired by
 [Brandon Ivergo](https://brandon.invergo.net/news/2012-05-26-using-gnu-stow-to-manage-your-dotfiles.html)
-to makange my dotfiles.
+to makange my dotfiles. This method ke
 
-Each folder represents a "package" for a thing I want to sync. Imagine
-everything in the `kitty` folder getting symlinked to
-$HOME. If ```kitty``` contains a ```.config``` folder, the contents of **.config** will appear inside your ```/home/$USER/.config```
-folder.
+Clone this repo to something like `~/.dotfiles` then...
 
-The dotfiles configuration then resides in a folder named after the package in
-.config, it looks a little goofy but keeps things neat on the machine in the
-end.
+```bash
+cd ~/.dotfiles
+stow nvim
+stow fish
+stow whatever
+```
+
+Each folder represents a "package" for a thing I want to sync. You can use stow
+nicely symlink `package/.config/package` to `/home/$USER/.config/package`. It
+looks a little goofy but keeps things neat in the end. And combine that with a
+git repo to keep a portable and version controlled set of dotfiles!
+
+If you add a new package in this manner and want to use the installer.sh script,
+theres a section you need to update in there.
 
 ## Example
 
-```markdown
-.dotfiles ├── kitty │ └── .config │ └── kitty │ └── kitty.conf ├── nvim │ └──
-.config │ └── nvim │ └── init.lua
+```bash
+.dotfiles
+├── fish
+│   └── .config
+│       └── fish
+│           └── main.fish
+├── new_package
+│   └── .config
+│       └── new_package
+│           └── .new_packagerc
 ```
 
 ## Installation
