@@ -1149,7 +1149,9 @@ style_user = "yellow bold"
 show_always = false
 disabled = false
 
+# if youre not me change this section
 [username.aliases]
+"devon@int.goblingarden.net" = "devon"
 
 [vagrant]
 format = "via [$symbol($version )]($style)"
