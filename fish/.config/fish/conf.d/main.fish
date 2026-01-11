@@ -274,13 +274,13 @@ end
 
 function fish_title
     set host (hostname -s)
-    # set cmd (status current-command)
+    set cmd (status current-command)
     set dir (prompt_pwd)
 
-    #if test "$cmd" = "fish" -o -z "$cmd"
-    #    echo "[$host] $dir"
-    #    return
-    #end
+    if test "$cmd" = "fish" -o -z "$cmd"
+        echo "[$host] $dir"
+        return
+    end
 
     echo "[$host] $dir"
 end
