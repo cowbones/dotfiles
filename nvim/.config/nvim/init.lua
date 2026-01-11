@@ -74,7 +74,15 @@ require("lazy").setup({
   {
     "RRethy/nvim-treesitter-endwise"
   },
-  
+
+  {
+    'numToStr/Comment.nvim',
+    opts = {
+        padding = true,
+        sticky = true
+    }
+  },
+
   { "windwp/nvim-autopairs",
     config = function()
       require("nvim-autopairs").setup({})
