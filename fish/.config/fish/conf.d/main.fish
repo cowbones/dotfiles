@@ -2,7 +2,7 @@
 # environment variables
 # ========================
 
-set -x MANROFFOPT "-c"
+set -x MANROFFOPT -c
 set -x MANPAGER "sh -c 'col -bx | bat -l man -p'"
 
 set -U __done_min_cmd_duration 10000
@@ -22,13 +22,13 @@ if test -f ~/.fish_profile
 end
 
 if test -f $HOME/.cargo/env.fish
-  source $HOME/.cargo/env.fish
+    source $HOME/.cargo/env.fish
 end
 
 for dir in $HOME/.local/bin $HOME/.cargo/bin $HOME/applications/depot_tools
-  if test -d $dir
-    fish_add_path $dir
-  end
+    if test -d $dir
+        fish_add_path $dir
+    end
 end
 
 # ========================
@@ -39,7 +39,8 @@ function __history_previous_command
     # !! previous command
     switch (commandline -t)
         case "!"
-            commandline -t $history[1]; commandline -f repaint
+            commandline -t $history[1]
+            commandline -f repaint
         case "*"
             commandline -i "!"
     end
@@ -56,7 +57,7 @@ function __history_previous_command_arguments
     end
 end
 
-if test "$fish_key_bindings" = "fish_vi_key_bindings"
+if test "$fish_key_bindings" = fish_vi_key_bindings
     bind -Minsert ! __history_previous_command
     bind -Minsert '$' __history_previous_command_arguments
 else
@@ -133,11 +134,11 @@ function update
     if test (math $now - $last_update) -gt $threshold
         echo "updating mirror list..."
         sudo cachyos-rate-mirrors
-        echo $now > $mirror_file
+        echo $now >$mirror_file
     else
         echo "mirrors recently updated, skipping..."
     end
-    
+
     echo "running pacman..."
     sudo pacman -Syu
     echo "updates done!"
@@ -302,4 +303,3 @@ function fish_greeting
 
     set_color normal
 end
-
