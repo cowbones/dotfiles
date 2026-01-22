@@ -76,7 +76,6 @@ require("lazy").setup({
 		},
 		opts = {
 			formatters_by_ft = {
-				-- prettier where we can
 				javascript = { "prettier" },
 				typescript = { "prettier" },
 				javascriptreact = { "prettier" },
@@ -92,7 +91,6 @@ require("lazy").setup({
 				graphql = { "prettier" },
 				vue = { "prettier" },
 				svelte = { "prettier" },
-				-- other languages
 				lua = { "stylua" },
 				python = { "isort", "black" },
 				go = { "goimports", "gofmt" },
@@ -256,10 +254,33 @@ require("lazy").setup({
 		end,
 	},
 
+	-- rust debugging
+	{
+		"puremourning/vimspector",
+		config = function()
+			vim.g.vimspector_enable_mappings = 'HUMAN'
+			vim.g.vimspector_sidebar_width = 85
+			vim.g.vimspector_bottombar_height = 15
+			vim.g.vimspector_terminal_maxwidth = 70
+		end,
+	},
+
+	-- floating terminal
+	{
+		"voldikss/vim-floaterm",
+		keys = {
+			{ "<leader>ft", ":FloatermNew --name=myfloat --height=0.3 --wintype=split --position=bottom<CR>", desc = "Open terminal" },
+			{ "t", ":FloatermToggle myfloat<CR>", desc = "Toggle terminal" },
+		},
+		config = function()
+			vim.keymap.set('t', "<Esc>", "<C-\\><C-n>:q<CR>")
+		end,
+	},
+
 	{
 		"neoclide/coc.nvim",
 		branch = "release",
-		build = "npm ci",
+		build = "npm install",
 		config = function()
 			vim.g.coc_global_extensions = {
 				"@yaegassy/coc-ansible",
@@ -287,8 +308,6 @@ require("lazy").setup({
 		opts = { parser = { comments = { "#", "//" } } },
 	},
 
-	-- exorcised - github copilot
-	-- { "github/copilot.vim" },
 })
 
 -- =========================
@@ -298,6 +317,7 @@ vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>", { noremap = true, silent = t
 vim.keymap.set("v", "<C-c>", '"+y', { noremap = true, silent = true })
 vim.keymap.set("n", "<C-c>", '"+yy', { noremap = true, silent = true })
 vim.keymap.set({ "n", "i", "v" }, "<C-v>", '"+p', { noremap = true, silent = true })
+vim.keymap.set("i", "<CR>", [[coc#pum#visible() ? coc#pum#confirm() : "\<CR>"]], { expr = true, silent = true })
 
 -- =========================
 -- autocmds
