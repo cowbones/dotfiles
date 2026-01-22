@@ -31,12 +31,6 @@ for dir in $HOME/.local/bin $HOME/.cargo/bin $HOME/applications/depot_tools
     end
 end
 
-function venv 
-  if test -e .venv/bin/activate.fish
-    source .venv/bin/activate.fish
-  end
-end
-
 # ========================
 # history and key bindings
 # ========================

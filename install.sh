@@ -165,6 +165,16 @@ for stow_name in "${!packages[@]}"; do
   fi
 done
 
+if [[ -n "${packages[fish]}" ]]; then
+  echo "installing fisher..."
+  fish -c "curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source && fisher install jorgebucaran/fisher"
+
+  if [ -f "$HOME/.config/fish/fish_plugins" ]; then
+    echo "syncing fisher plugins..."
+    fish -c "fisher update"
+  fi
+fi
+
 echo ""
 echo "installation complete!"
 echo "restart your shell or run: exec fish"
