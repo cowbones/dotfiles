@@ -215,7 +215,7 @@ require("lazy").setup({
 	},
 
 	{
-		"ggandor/leap.nvim",
+		url = "https://codeberg.org/andyg/leap.nvim",
 		config = function()
 			local leap = require("leap")
 			leap.setup({
@@ -258,7 +258,7 @@ require("lazy").setup({
 	{
 		"puremourning/vimspector",
 		config = function()
-			vim.g.vimspector_enable_mappings = 'HUMAN'
+			vim.g.vimspector_enable_mappings = "HUMAN"
 			vim.g.vimspector_sidebar_width = 85
 			vim.g.vimspector_bottombar_height = 15
 			vim.g.vimspector_terminal_maxwidth = 70
@@ -269,11 +269,15 @@ require("lazy").setup({
 	{
 		"voldikss/vim-floaterm",
 		keys = {
-			{ "<leader>ft", ":FloatermNew --name=myfloat --height=0.3 --wintype=split --position=bottom<CR>", desc = "Open terminal" },
+			{
+				"<leader>ft",
+				":FloatermNew --name=myfloat --height=0.3 --wintype=split --position=bottom<CR>",
+				desc = "Open terminal",
+			},
 			{ "t", ":FloatermToggle myfloat<CR>", desc = "Toggle terminal" },
 		},
 		config = function()
-			vim.keymap.set('t', "<Esc>", "<C-\\><C-n>:q<CR>")
+			vim.keymap.set("t", "<Esc>", "<C-\\><C-n>:q<CR>")
 		end,
 	},
 
@@ -307,7 +311,6 @@ require("lazy").setup({
 		"hat0uma/csvview.nvim",
 		opts = { parser = { comments = { "#", "//" } } },
 	},
-
 })
 
 -- =========================
@@ -344,3 +347,4 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		end
 	end,
 })
+

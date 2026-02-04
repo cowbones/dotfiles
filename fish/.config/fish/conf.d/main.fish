@@ -11,6 +11,7 @@ set -U __done_notification_urgency_level low
 set -gx KITTY_CONFIG_DIRECTORY ~/.config/kitty
 set -gx TERM xterm-256color
 set -gx SYSTEMD_EDITOR nvim
+set -gx SUDO_EDITOR nvim
 set -g fish_color_autosuggestion 666666 # holy hell
 
 # ========================
@@ -98,6 +99,7 @@ function ec --description "Edit fish config"
 end
 
 function sc --description "Source fish config"
+    source ~/.config/fish/config.local.fish
     source ~/.config/fish/conf.d/main.fish
 end
 
