@@ -304,6 +304,97 @@ require("lazy").setup({
 			vim.opt.writebackup = false
 			vim.opt.updatetime = 300
 			vim.opt.signcolumn = "yes"
+
+			-- vscode-like autocompletion keybindings
+			local keyset = vim.keymap.set
+
+			-- use tab for trigger completion and navigate to next item
+			function _G.check_back_space()
+				local col = vim.fn.col(".") - 1
+				return col == 0 or vim.fn.getline("."):sub(col, col):match("%s") ~= nil
+			end
+
+			local opts = { silent = true, noremap = true, expr = true, replace_keycodes = false }
+			-- trigger completion or navigate to next item - [tab]
+			keyset(
+				"i",
+				"<TAB>",
+				'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()',
+				opts
+			)
+			-- navigate to previous completion item - [shift+tab]
+			keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
+
+			-- accept selected completion item or format - [enter]
+			keyset(
+				"i",
+				"<CR>",
+				[[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]],
+				opts
+			)
+
+			-- trigger completion manually - [ctrl+space]
+			keyset("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
+
+			-- goto code navigation
+			-- go to definition - [gd]
+			keyset("n", "gd", "<Plug>(coc-definition)", { silent = true })
+			-- go to type definition - [gy]
+			keyset("n", "gy", "<Plug>(coc-type-definition)", { silent = true })
+			-- go to implementation - [gi]
+			keyset("n", "gi", "<Plug>(coc-implementation)", { silent = true })
+			-- go to references - [gr]
+			keyset("n", "gr", "<Plug>(coc-references)", { silent = true })
+
+			-- use k to show documentation in preview window
+			function _G.show_docs()
+				local cw = vim.fn.expand("<cword>")
+				if vim.fn.index({ "vim", "help" }, vim.bo.filetype) >= 0 then
+					vim.api.nvim_command("h " .. cw)
+				elseif vim.api.nvim_eval("coc#rpc#ready()") then
+					vim.fn.CocActionAsync("doHover")
+				else
+					vim.api.nvim_command("!" .. vim.o.keywordprg .. " " .. cw)
+				end
+			end
+
+			-- show documentation for symbol under cursor - [shift+k]
+			keyset("n", "K", "<CMD>lua _G.show_docs()<CR>", { silent = true })
+
+			-- highlight the symbol and its references on cursor hold
+			vim.api.nvim_create_augroup("CocGroup", {})
+			vim.api.nvim_create_autocmd("CursorHold", {
+				group = "CocGroup",
+				command = "silent call CocActionAsync('highlight')",
+				desc = "Highlight symbol under cursor on CursorHold",
+			})
+
+			-- rename symbol under cursor - [space+rn]
+			keyset("n", "<leader>rn", "<Plug>(coc-rename)", { silent = true })
+
+			-- formatting selected code
+			-- format selected code in visual mode - [space+f]
+			keyset("x", "<leader>f", "<Plug>(coc-format-selected)", { silent = true })
+			-- format selected code in normal mode - [space+f]
+			keyset("n", "<leader>f", "<Plug>(coc-format-selected)", { silent = true })
+
+			-- apply code action to the selected region
+			-- apply code action in visual mode - [space+a]
+			keyset("x", "<leader>a", "<Plug>(coc-codeaction-selected)", { silent = true })
+			-- apply code action in normal mode - [space+a]
+			keyset("n", "<leader>a", "<Plug>(coc-codeaction-selected)", { silent = true })
+
+			-- apply code actions at the cursor position - [space+ac]
+			keyset("n", "<leader>ac", "<Plug>(coc-codeaction-cursor)", { silent = true })
+
+			-- apply the most preferred quickfix action - [space+qf]
+			keyset("n", "<leader>qf", "<Plug>(coc-fix-current)", { silent = true })
+
+			-- use `[g` and `]g` to navigate diagnostics
+			-- go to previous diagnostic - [[g]
+			keyset("n", "[g", "<Plug>(coc-diagnostic-prev)", { silent = true })
+			-- go to next diagnostic - []g]
+			keyset("n", "]g", "<Plug>(coc-diagnostic-next)", { silent = true })
 		end,
 	},
 
@@ -316,11 +407,14 @@ require("lazy").setup({
 -- =========================
 -- keybindings
 -- =========================
+-- toggle file tree sidebar - [ctrl+n]
 vim.keymap.set("n", "<C-n>", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
+-- copy selection to system clipboard - [ctrl+c in visual mode]
 vim.keymap.set("v", "<C-c>", '"+y', { noremap = true, silent = true })
+-- copy current line to system clipboard - [ctrl+c in normal mode]
 vim.keymap.set("n", "<C-c>", '"+yy', { noremap = true, silent = true })
+-- paste from system clipboard - [ctrl+v]
 vim.keymap.set({ "n", "i", "v" }, "<C-v>", '"+p', { noremap = true, silent = true })
-vim.keymap.set("i", "<CR>", [[coc#pum#visible() ? coc#pum#confirm() : "\<CR>"]], { expr = true, silent = true })
 
 -- =========================
 -- autocmds
@@ -347,4 +441,3 @@ vim.api.nvim_create_autocmd("BufEnter", {
 		end
 	end,
 })
-
