@@ -332,7 +332,7 @@ require("lazy").setup({
 			keyset(
 				"i",
 				"<TAB>",
-				'coc#pum#visible() ? coc#pum#next(1) : v:lua.check_back_space() ? "<TAB>" : coc#refresh()',
+				'coc#pum#visible() ? coc#pum#confirm() : v:lua.check_back_space() ? "<TAB>" : coc#refresh()',
 				opts
 			)
 			-- navigate to previous completion item - [shift+tab]
