@@ -328,23 +328,17 @@ require("lazy").setup({
 			end
 
 			local opts = { silent = true, noremap = true, expr = true, replace_keycodes = false }
-			-- trigger completion or navigate to next item - [tab]
+
+			-- trigger completion
 			keyset(
 				"i",
 				"<TAB>",
 				'coc#pum#visible() ? coc#pum#confirm() : v:lua.check_back_space() ? "<TAB>" : coc#refresh()',
 				opts
 			)
-			-- navigate to previous completion item - [shift+tab]
-			keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
 
-			-- accept selected completion item or format - [enter]
-			keyset(
-				"i",
-				"<CR>",
-				[[coc#pum#visible() ? coc#pum#confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"]],
-				opts
-			)
+			-- navigate to previous completion item [shift+tab]
+			keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
 
 			-- trigger completion manually - [ctrl+space]
 			keyset("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
