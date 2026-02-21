@@ -340,9 +340,6 @@ require("lazy").setup({
 			-- navigate to previous completion item [shift+tab]
 			keyset("i", "<S-TAB>", [[coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"]], opts)
 
-			-- trigger completion manually - [ctrl+space]
-			keyset("i", "<C-Space>", "coc#refresh()", { silent = true, expr = true })
-
 			-- goto code navigation
 			-- go to definition - [gd]
 			keyset("n", "gd", "<Plug>(coc-definition)", { silent = true })
